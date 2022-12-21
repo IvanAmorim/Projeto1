@@ -78,17 +78,56 @@ h1{
   }
 }
 
+
+.main-icon-navigation{
+  margin:2% 0%;
+}
 .casa{
     color: black;
     position: relative;
-    left: -3vh;
-    top:100vh;
+    top:3vh;
+    text-align: center;
     text-decoration:none;
+    visibility: hidden;
 }
 
 .icon{
-    text-align: right;
-    justify-content: right;
+    text-align: center;
+    justify-content: center;
     left: 10px;
+    text-decoration: none;
+    background-color: initial;
+    background-image: linear-gradient(#464d55, #25292e);
+    border-radius: 8px;
+    border-width: 0;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, .1),0 3px 6px rgba(0, 0, 0, .05);
+    box-sizing: border-box;
+    color: #fff;
+    display: inline-flex;
+    height: 40px;
+    flex-direction: column;
+    font-family: expo-brand-demi,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+    font-size: 18px;
+    justify-content: center;
+    line-height: 0;
+    margin: 0;
+    outline: none;
+    
+    text-align: center;
+    transform: translate3d(0, 0, 0);
+    transition: all 150ms;
+    vertical-align: baseline;
+    white-space: nowrap;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    flex-wrap: wrap;
+    align-content: center;
+    align-items: center;
+    width: 6vh;
+}
+
+.icon:hover .casa{
+  visibility: visible;
 }
 
