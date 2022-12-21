@@ -131,3 +131,47 @@ h1{
   visibility: visible;
 }
 
+
+/** body**/
+.body{
+  background-color: #D0D1D3;
+}
+
+.body1{
+  padding:5%;
+}
+.body1 h3{
+  padding-top: 15px
+}
+.body1 p{
+  font-family: expo-brand-demi,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+  font-size: 18px;
+}
+
+
+
+/**rodape **/
+
+.rodape{
+  background-color:#464d55;
+  padding-top: 25px;
+}
+
+.campos{
+  color: white;
+  padding-right: 10px;
+}
+
+
+.relative{
+  align-items: center;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+
+.btnrodape{
+  background-color: black;
+}
