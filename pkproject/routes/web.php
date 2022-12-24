@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PagesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +14,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('MainPage');
+//redirecionar para o index
+Route::get('/',[PagesController::class,'index']);
+Route::get('/index',[PagesController::class,'index'])->name('index');
+Route::get('ServiceTemplate', [PagesController::class, 'service'])->name('service');
+
+Route::get('/dbconn', function(){
+    return view('dbconn');
 });
