@@ -78,3 +78,59 @@ h1{
   }
 }
 
+.body{
+  background-color: #D0D1D3;
+}
+
+.bannerservico{
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  padding: 20px;
+  background-color: cadetblue;
+  margin-bottom: 5%;
+
+}
+
+.bannerservico h1{
+  padding-right: 32px;
+}
+
+.examples h3{
+  color: rgb(0, 4, 255);
+  padding-bottom: 10px;
+}
+.examples p{
+  font-family: expo-brand-demi,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+  font-size: 18px;
+}
+
+
+/* Create three unequal columns that floats next to each other */
+.column {
+  float: left;
+  padding: 7px;
+}
+
+/* Left and right column */
+.column.side {
+  width: 50%;
+}
+
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+  padding: 7px;
+}
+
+
+.left {
+  padding-left:15%;
+}
+.right{
+  padding-left: 5%;
+  padding-bottom: 1.25%;
+}

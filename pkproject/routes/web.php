@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PagesController;
+use App\Http\Controllers\ServicosController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,7 +18,7 @@ use App\Http\Controllers\PagesController;
 //redirecionar para o index
 Route::get('/',[PagesController::class,'index']);
 Route::get('/index',[PagesController::class,'index'])->name('index');
-Route::get('ServiceTemplate', [PagesController::class, 'service'])->name('service');
+Route::get('ServiceTemplate/{id}', [ServicosController::class, 'index'])->name('service');
 
 Route::get('/dbconn', function(){
     return view('dbconn');

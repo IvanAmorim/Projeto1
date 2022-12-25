@@ -27,12 +27,40 @@
             </form>
         </div>
     </div>
-    <div class="bannerservico">
-        <h1>{{ $Servico->nome }}</h1>
-        <h3>{{ $Servico->descricao }}</h3>
+    <div class="body">
+        @foreach ($categories as $category)
+            <div class="bannerservico">
+                <h1>{{ $category->Name }}</h1>
+                <h2>{{ $category->Description }}</h2>
 
-    </div>
+            </div>
+        @endforeach
+        <?php
+        $count=0;
+        foreach ($services as $service ){
+            
+            if($count % 2){
 
-    
+                echo ('<div class="column side right ">'); 
+            }
+            else {
+                echo ('<div class="column side row left">');
+            }
+            echo ('<div class="examples">');
+                echo ("<h3> $service->Name </h3>");
+               
+                foreach ($examples as $example){
+                    if ($example->ID_TypeService == $service->ID)
+                        echo ("<p>$example->Name </p>");
+                    
+                    
+            }
+            echo ('</div>');
+            echo ('</div>');
+            echo ('</div>');
+            $count++;
+        }
+        ?>
+    </div>    
 </body>
 </html>
