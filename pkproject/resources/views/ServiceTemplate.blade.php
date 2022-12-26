@@ -37,6 +37,7 @@
         @endforeach
         <?php
         $count=0;
+        
         foreach ($services as $service ){
             
             if($count % 2){
@@ -47,12 +48,13 @@
                 echo ('<div class="column side row left">');
             }
             echo ('<div class="examples">');
-                echo ("<h3> $service->Name </h3>");
+            echo ("<h3> $service->Name </h3>");
                
-                foreach ($examples as $example){
-                    if ($example->ID_TypeService == $service->ID)
-                        echo (<p><a href="{{ route('job') }}">$example->Name \n</a></p>);
-                    
+            foreach ($examples as $example){
+                if ($example->ID_TypeService == $service->ID){
+                    $route=route("job",['id'=>$example->ID]);
+                    echo("<p><a href='$route'> $example->Name </a></p>");
+                }
             }
 
             echo ('</div>');

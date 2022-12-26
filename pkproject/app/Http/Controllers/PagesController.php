@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\perguntas;
+use App\Models\respostas;
 use Illuminate\Http\Request;
 
 class PagesController extends Controller
@@ -13,8 +15,19 @@ class PagesController extends Controller
     public function service(){
         return view('ServiceTemplate');
     }
-    public function job(){
-        return view('job');
+    public function job($id){
+        $perguntas=perguntas::orderBy('id','asc')->where('ID_serviceexamples',$id)->paginate();
+        $ids=array();
+        $cnt=0;
+        foreach($perguntas as $pergunta){
+            $ids[$cnt++]=$pergunta->ID;
+        }
+       
+        $count=respostas::orderBy('id','asc')->whereIn('ID_pergunta',$ids)->count();
+        $respostas=respostas::orderBy('id','asc')->whereIn('ID_pergunta',$ids)->paginate($count);
+
+        
+        return view('job',['perguntas'=>$perguntas,'respostas'=>$respostas,'id'=>$id]);
     }
 
 }

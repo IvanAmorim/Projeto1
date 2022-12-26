@@ -24,4 +24,4 @@ Route::get('/dbconn', function(){
     return view('dbconn');
 });
 
-Route::get('/job',[PagesController::class,'job'])->name('job');
+Route::get('/job/{id}',[PagesController::class,'job'])->name('job');
