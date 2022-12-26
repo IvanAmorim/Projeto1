@@ -52,10 +52,6 @@
                 foreach ($examples as $example){
                     if ($example->ID_TypeService == $service->ID)
                         echo (<p><a href="{{ route('job') }}">$example->Name \n</a></p>);
-
-                        echo (<p><a href="{{ route('job') }}">$example->Name \n</a></p>);
-                        echo (<p><a href="{{ route('job') }}">$example->Name \n</a></p>);
-                    
                     
             }
 
