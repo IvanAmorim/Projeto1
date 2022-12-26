@@ -13,5 +13,8 @@ class PagesController extends Controller
     public function service(){
         return view('ServiceTemplate');
     }
+    public function job(){
+        return view('job');
+    }
 
 }

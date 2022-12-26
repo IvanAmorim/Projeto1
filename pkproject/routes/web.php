@@ -23,3 +23,5 @@ Route::get('ServiceTemplate/{id}', [ServicosController::class, 'index'])->name('
 Route::get('/dbconn', function(){
     return view('dbconn');
 });
+
+Route::get('/job',[PagesController::class,'job'])->name('job');

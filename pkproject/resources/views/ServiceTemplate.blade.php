@@ -16,9 +16,9 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
     <script src="https://kit.fontawesome.com/4388aefc94.js" crossorigin="anonymous"></script>
 
-    <div class="title center">
+    <div class="title center ">
         <h1>Plataforma digital de mediação de serviços pessoais!!!</h1>
-
+<?php echo("<img src='/images/$id.jpg' class='image'>") ?>
         <div class="search-container center">
             <form action="/action_page.php">
               <input type="text" placeholder="Procure um serviço " name="search" class="search">
@@ -51,16 +51,17 @@
                
                 foreach ($examples as $example){
                     if ($example->ID_TypeService == $service->ID)
-                        echo ("<p>$example->Name </p>");
+                        echo ("<p><a href='{{ route('service') }}'>$example->Name \n</a></p>");
                     
                     
             }
-            echo ('</div>');
+
             echo ('</div>');
             echo ('</div>');
             $count++;
         }
         ?>
+        
     </div>    
 </body>
 </html>
