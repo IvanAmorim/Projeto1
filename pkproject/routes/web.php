@@ -17,7 +17,7 @@ use App\Http\Controllers\ServicosController;
 
 //redirecionar para o index
 Route::get('/',[PagesController::class,'index']);
-Route::get('/index',[PagesController::class,'index'])->name('index');
+Route::get('/index',[PagesController::class,'index'])->name('main');
 Route::get('ServiceTemplate/{id}', [ServicosController::class, 'index'])->name('service');
 
 Route::get('/dbconn', function(){
@@ -25,3 +25,6 @@ Route::get('/dbconn', function(){
 });
 
 Route::get('/job/{id}',[PagesController::class,'job'])->name('job');
+
+//Inserir dados dos pedidos 
+Route::post('/job/{id}',[ServicosController::class, 'DataInsert']);
