@@ -1,26 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link href="/css/job.css" rel="stylesheet"> 
+<title>{{ $categoria }}</title>
+@extends('layouts.app')
+@section('links')
     <link href="{{ asset('css/ServiceTemplate.css') }}" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons@latest/iconfont/tabler-icons.min.css">
-    
+@endsection
+@section('content')
+<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/css/bootstrap.css" rel="stylesheet">
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-    <title>{{ $categoria }}</title>
-</head>
-<body>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/css/bootstrap.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 
     <script>
         @if (Session::has('success'))
@@ -32,25 +22,19 @@
             toastr.success("{{ session('success') }}")
             
         @endif
-  
-@if ($errors->any())
-    toastr.error("Por favor preencha todos os campos", "Erro")
-@endif
-</script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
-    <script src="https://kit.fontawesome.com/4388aefc94.js" crossorigin="anonymous"></script>
 
-    
+        @if ($errors->any())
+            toastr.error("Por favor preencha todos os campos", "Erro")
+        @endif
+
+  
+    </script>
+
     <div class="title center ">
         <h1>Plataforma digital de mediação de serviços pessoais!!!</h1>
-<?php echo("<img src='/images/$categoria.jpg' class='image'>") ?>
+        <?php echo("<img src='/images/$id.jpg' class='image'>") ?>
         
     </div>
-
-
-
 
     <div class="wrap">
 
@@ -61,7 +45,7 @@
             
                 foreach ($perguntas as $pergunta) {
                     echo('<div class="card">
-                            <div class="container">');
+                            <div class="container1">');
                     echo("<h4>$pergunta->Pergunta</h4>");
                     switch ($count) {
                         case '0':
@@ -96,7 +80,7 @@
             ?>   
             
             <div class="card">
-                <div class="container">
+                <div class="container1">
                     <h4>Tem mais informações que ainda não nos deu?</h4>
                     <textarea class='textarea' name='informacoes' placeholder=' Outros detalhes que queira mencionar?'></textarea>    
                 </div>    
@@ -104,7 +88,7 @@
             
             
             <div class="card">
-                <div class="container">
+                <div class="container1">
                     <h4>Indique o seu codigo postal</h4>
                     <h6>Usamos o código postal para encontrar os melhores especialistas perto de si.</h6>
                     <input type='text' class='textbox' name='codPostal' placeholder=' Código Postal (ex. 1000-001)'>    
@@ -112,7 +96,7 @@
             </div>   
             
             <div class="card">
-                <div class="container">
+                <div class="container1">
                     <h4>Como é que os especialistas podem entrar em contacto?</h4>
                     <h6>Email: </h6>
                     <input type='text' class='textbox' name='email' placeholder=' Email'>    
@@ -128,12 +112,11 @@
             
             
             <div class="card">
-                <div class="container">
+                <div class="container1">
                     <input type="submit" class="button"> 
                 </div>    
             </div>            
         </form>
     </div>
-</body>
-</html>
-  
+
+@endsection

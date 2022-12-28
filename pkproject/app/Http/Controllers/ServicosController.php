@@ -23,7 +23,7 @@ class ServicosController extends Controller
         
         $examples=servicexamples::orderBy('id','asc')->whereIn('ID_TypeService',$ids)->paginate();
         
-        return view('ServiceTemplate',['categories'=>$categories,'services'=>$services,'examples'=>$examples,'id'=>$id])->with('i',0);            
+        return view('Pages.ServiceTemplate',['categories'=>$categories,'services'=>$services,'examples'=>$examples,'id'=>$id])->with('i',0);            
     }
 
     public function DataInsert(Request $request){
@@ -96,5 +96,13 @@ class ServicosController extends Controller
     
     }
 
+    public function prestadores(){
+        return view('Pages.prestadores');
+        
+    }
+
+    public function user(){
+        return view('Pages.userpedidos');
+    }
 
 }

@@ -155,3 +155,74 @@ h1{
   padding-left: 5%;
   padding-bottom: 1.25%;
 }
+
+
+
+/*Job*/
+
+
+.wrap{
+  width:1000px;
+  margin:auto;
+}
+
+.card{
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.6);
+  transition: 0.4s;
+  width: 700px;
+  background: #fff;
+  text-align: center;
+  font-size: 16px;
+  font-family: sans-serif;
+  float: inherit;
+  margin: 17px;
+  margin-left: 14%;
+  float: left;
+
+}
+
+.card:hover{
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.6);
+
+}
+
+.container1{
+  padding: 20px 16px;
+  left: auto;
+  
+}
+
+
+.container1 h4{
+  padding-top: 20px;
+  padding-bottom: 15px;
+
+}
+
+.resposta{
+  text-align: center;
+}
+
+.textbox{
+  background-color: rgb(219, 218, 218);
+  border-radius: 10px;
+  border-width: 1px;
+  height: 15%;
+  width: 40%;
+  text-align: center;
+  
+}
+
+.container1 p{
+  margin-top: 11px;
+  margin-bottom: 0.5rem;
+}
+
+.textarea{
+  background-color: rgb(219, 218, 218);
+  border-radius: 10px;
+  border-width: 1px;
+  height:50px;
+  width:50%;
+  text-align: center;
+}

@@ -10,7 +10,11 @@ use Illuminate\Http\Request;
 class PagesController extends Controller
 {
     public function index(){
-        return view('MainPage');
+        return view('Pages.MainPage');
+    }
+
+    public function main(){
+        return view('Pages.MainPage');
     }
 
     public function service(){
