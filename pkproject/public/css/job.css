@@ -4,18 +4,22 @@
     width:1000px;
     margin:auto;
     margin-top: 100px;
+
+
 }
 
 .card{
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.6);
     transition: 0.4s;
-    width: 600px;
+    width: 700px;
     background: #fff;
     text-align: center;
     font-size: 16px;
     font-family: sans-serif;
+    float: inherit;
+    margin: 17px;
+    margin-left: 14%;
     float: left;
-    margin: 10px;
 
 }
 
@@ -26,10 +30,38 @@
 
 .container{
     padding: 20px 16px;
+    left: auto;
+    
 }
 
 
 .container h4{
     padding-top: 20px;
     padding-bottom: 15px;
+
+}
+
+.resposta{
+    text-align: center;
+}
+
+.textbox{
+    background-color: rgb(219, 218, 218);
+    border-radius: 10px;
+    border-width: 1px;
+    height: 10%;
+    
+}
+
+.container p{
+    margin-top: 11px;
+    margin-bottom: 0.5rem;
+}
+
+.textarea{
+    background-color: rgb(219, 218, 218);
+    border-radius: 10px;
+    border-width: 1px;
+    height:50px;
+    width:50%;
 }

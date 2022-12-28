@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\perguntas;
 use App\Models\respostas;
+use App\Models\servicexamples;
 use Illuminate\Http\Request;
 
 class PagesController extends Controller
@@ -25,9 +26,9 @@ class PagesController extends Controller
        
         $count=respostas::orderBy('id','asc')->whereIn('ID_pergunta',$ids)->count();
         $respostas=respostas::orderBy('id','asc')->whereIn('ID_pergunta',$ids)->paginate($count);
-
+        $categoria= servicexamples::orderBy('id')->where('ID',$id)->value('Name');
         
-        return view('job',['perguntas'=>$perguntas,'respostas'=>$respostas,'id'=>$id]);
+        return view('job',['perguntas'=>$perguntas,'respostas'=>$respostas,'categoria'=>$categoria, 'id'=>$id]);
     }
 
 }
