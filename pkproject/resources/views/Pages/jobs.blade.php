@@ -4,6 +4,7 @@
 
 
 
+
 <title>{{ $categoria }}</title>
 @extends('layouts.app')
 @section('links')
