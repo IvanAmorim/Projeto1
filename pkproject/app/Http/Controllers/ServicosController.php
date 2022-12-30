@@ -38,6 +38,8 @@ class ServicosController extends Controller
         $pedido = new pedidos;
         $pedido->ID_user=Auth::user()->id;
         $pedido->informacoes = $request->informacoes;
+        $pedido->Concelho = $request->Concelho;
+        $pedido->Lugar = $request->Lugar;
         $pedido->CodPostal = $request->codPostal;
         $pedido->Email = $request->email;
         $pedido->Nome = $request->nomeApelido;
@@ -90,7 +92,16 @@ class ServicosController extends Controller
     }
 
     public function prestadores(){
-        return view('Pages.prestadores');
+        $result=pedidoservicos::orderBy('pedidoservicos.id')
+                                                            ->leftjoin('servicexamples','pedidoservicos.ID_servico','=','servicexamples.ID')
+                                                            ->leftjoin('users','pedidoservicos.ID_user','=','users.id')
+                                                            ->leftjoin('pedidos','pedidoservicos.ID_pedido','=','pedidos.ID')
+                                                            ->paginate();
+        /*foreach($result as $res){
+            echo("<br>");
+            print_r($res);
+        }*/
+        return view('Pages.prestadores',['results'=>$result]);
         
     }
 

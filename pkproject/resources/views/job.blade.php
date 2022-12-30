@@ -90,9 +90,13 @@
             
             <div class="card">
                 <div class="container1">
-                    <h4>Indique o seu codigo postal</h4>
-                    <h6>Usamos o código postal para encontrar os melhores especialistas perto de si.</h6>
-                    <input type='text' class='textbox' name='codPostal' placeholder=' Código Postal (ex. 1000-001)'>    
+                    <h4>Indique a sua localização</h4>
+                    <h6>Concelho</h6>
+                    <input type='text' class='textbox mb-3' name='Concelho' placeholder=' Ex.Viana do Castelo'>    
+                    <h6>Lugar</h6>
+                    <input type='text' class='textbox mb-3' name='Lugar' placeholder=' Ex.Av. do Atlântico 644'>    
+                    <h6>Código postal</h6>
+                    <input type='text' class='textbox' name='codPostal' placeholder=' ex. 4900'>    
                 </div>    
             </div>   
             
