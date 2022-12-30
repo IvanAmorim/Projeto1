@@ -29,6 +29,15 @@
 
   
     </script>
+    
+    @guest
+        <div class="text-center mt-5 text-danger fw-bold">
+            <h3>Para poder continuar faça 
+            <a href="{{ route('login') }}">login</a> !!!</h3>
+            
+        </div>
+    @else
+    
 
     <div class="title center ">
         <h1>Plataforma digital de mediação de serviços pessoais!!!</h1>
@@ -41,38 +50,30 @@
         <form action="datainsert" method="post" enctype="multipart/form-data">
             @csrf
             <?php
-            $count = 0;
+            $i = 0;
             
                 foreach ($perguntas as $pergunta) {
                     echo('<div class="card">
                             <div class="container1">');
                     echo("<h4>$pergunta->Pergunta</h4>");
-                    switch ($count) {
-                        case '0':
-                            $resp="resposta1";
-                            break;
-                        case '1':
-                            $resp="resposta2";
-                            break;
-                        case '2':
-                            $resp="resposta3";
-                            break;
-                        case '3':
-                            $resp="resposta4";
-                            break;
-                        case '4':
-                            $resp="resposta5";
-                            break;
-                    }
-                    $count++;
-                    foreach ($respostas as $resposta) {
-                        if($resposta->ID_pergunta == $pergunta->ID)
-                       
-                            echo("<input class='resposta' type='radio' name='$resp' value=$resposta>
-                                    <label class='resposta' for='$resposta->ID'>$resposta->Resposta</label><br>");
-
+                    
+                    if($pergunta->tipo_resposta==2){
+                        foreach ($respostas as $resposta) {
+                            if($resposta->ID_pergunta == $pergunta->ID){
+                                $resp="resposta".$i;
+                                echo("<input class='resposta' type='radio' name='$resp' value=$resposta->ID>
+                                        <label class='resposta' for='$resposta->ID'>$resposta->Resposta</label><br>");
+                            
+                            }
+                        }
+                        
+                    }else{
+                        $resp="resposta".$i;
+                        echo("<input type='text' class='textbox' name='$resp'>");
                     }
 
+
+                    $i++;
                     echo('</div>
                             </div>');
                 }
@@ -99,7 +100,8 @@
                 <div class="container1">
                     <h4>Como é que os especialistas podem entrar em contacto?</h4>
                     <h6>Email: </h6>
-                    <input type='text' class='textbox' name='email' placeholder=' Email'>    
+                    <input id="email" type="email" class="form-control textbox @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" >
+
                     <h4>Indique o seu Nome e Apelido </h4>
                     <input type='text' class='textbox' name='nomeApelido' placeholder=' Nome e Apelido'>    
                     <p>Nº Telemóvel</p>
@@ -113,10 +115,10 @@
             
             <div class="card">
                 <div class="container1">
-                    <input type="submit" class="button"> 
+                    <button type="submit" class="button" name='id' value='{{ $id }}'> Enviar</button>
                 </div>    
             </div>            
         </form>
     </div>
-
+    @endguest
 @endsection

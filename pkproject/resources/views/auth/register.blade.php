@@ -61,6 +61,19 @@
                             </div>
                         </div>
 
+                        <div class="form-check">
+                          <input class="form-check-input" type="radio" name="tipo" value="2" checked="checked">
+                          <label class="form-check-label" for="Cliente">
+                            Cliente
+                          </label>
+                        </div>
+                        <div class="form-check">
+                          <input class="form-check-input" type="radio" name="tipo" value="1"  >
+                          <label class="form-check-label" for="Prestador">
+                            Prestador de serviços
+                          </label>
+                        </div>
+
                         <div class="row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">

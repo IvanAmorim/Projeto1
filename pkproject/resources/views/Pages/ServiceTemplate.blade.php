@@ -22,8 +22,8 @@
         @foreach ($categories as $category)
         <div class="bannerservico">
             @section('titulo',$category->Name)
-            <h1>{{ $category->Name }}</h1>
-            <h2>{{ $category->Description }}</h2>
+            <h2 class="pe-3">{{ $category->Name }}</h2>
+            <h4>{{ $category->Description }}</h4>
 
         </div>
         @endforeach

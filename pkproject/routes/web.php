@@ -28,6 +28,7 @@ Route::get('/job/{id}',[PagesController::class,'job'])->name('job');
 
 //Inserir dados dos pedidos 
 Route::post('/job/{id}',[ServicosController::class, 'DataInsert']);
+
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -35,3 +36,13 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('Pages/prestadores',[ServicosController::class, 'prestadores'])->name('Pages.prestadores');
 
 Route::get('Pages/userpedidos',[ServicosController::class,'user'])->name('Pages.userpedidos');
+
+Route::get('Admin/categoria',[ServicosController::class,'categoria'])->name('Admin.categoria');
+Route::post('/Admin/categoria',[ServicosController::class, 'categoryinsert']);
+
+Route::get('Admin/servico',[ServicosController::class,'servicos'])->name('Admin.servico');
+Route::post('Admin/servico',[ServicosController::class, 'servicoinsert']);
+Route::get('Admin/perguntas',[ServicosController::class, 'perguntas'])->name('Admin.perguntas');
+Route::post('Admin/perguntas',[ServicosController::class, 'perguntasInsert']);
+Route::get('Admin/respostas',[ServicosController::class, 'respostas'])->name('Admin.respostas');
+Route::post('Admin/respostas',[ServicosController::class, 'respostasInsert']);
