@@ -36,7 +36,8 @@ h1{
     border-radius: 4px;
     box-sizing: border-box;
     background-color: #25292e ;
-    width: 500px
+    width: 500px;
+    color:white;
 }
 
 .button {

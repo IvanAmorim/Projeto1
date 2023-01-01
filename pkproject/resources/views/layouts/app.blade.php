@@ -22,6 +22,7 @@
     
 </head>
 <body>
+
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
@@ -60,9 +61,18 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('Pages.userpedidos') }}">Os meus pedidos
-                                     
-                                    </a>
+                                    @if (Auth::user()->tipo == 3)
+                                        <a class="dropdown-item" href="{{ route('home') }}">Admin</a>
+                                    @endif
+                                    
+                                    <a class="dropdown-item" href="{{ route('Pages.userpedidos') }}">Os meus pedidos</a>
+                                    @if (Auth::user()->tipo == 1)
+                                        <a class="dropdown-item" href="{{ route('Pages.prestadores')}}">Pedidos</a>
+                                    @endif
+                                    @if (Auth::user()->tipo == 1)
+                                        <a class="dropdown-item" href="{{ route('Pages.verpropostas',['id'=> "all"])}}">As minhas propostas</a>
+                                    @endif
+
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
@@ -75,9 +85,6 @@
                                     </form>
                                 </div>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('Pages.prestadores')}}">Pedidos</a>
-                            </li>
                         @endguest
                     </ul>
                 </div>
@@ -85,6 +92,18 @@
         </nav>
 
         <main>
+            @if (\Session::has('error'))
+                <div class="alert alert-danger text-center">
+                    {!! \Session::get('error') !!}
+                    
+                </div>
+                
+            @elseif (\Session::has('success'))
+                <div class="alert alert-success text-center">
+                    {!! \Session::get('success') !!}
+                    
+                </div>
+          @endif
             @yield('content')
         </main>
     </div>

@@ -46,3 +46,13 @@ Route::get('Admin/perguntas',[ServicosController::class, 'perguntas'])->name('Ad
 Route::post('Admin/perguntas',[ServicosController::class, 'perguntasInsert']);
 Route::get('Admin/respostas',[ServicosController::class, 'respostas'])->name('Admin.respostas');
 Route::post('Admin/respostas',[ServicosController::class, 'respostasInsert']);
+
+Route::get('Pages/servico/{id}',[ServicosController::class, 'servico'])->name('Pages.servico');
+Route::post('Pages/servico/{id}',[ServicosController::class, 'propostainsert'])->name('Inserirproposta');
+
+Route::get('Pages/verpropostas/{id}',[ServicosController::class, 'verproposta'])->name('Pages.verpropostas');
+
+Route::get('Pages/conversas/{id}',[ServicosController::class, 'conversas'])->name('Pages.conversas');
+Route::post('Pages/conversas/{id}',[ServicosController::class, 'conversassubmit']);
+
+Route::post('Pages/conversas/{id}/estado',[ServicosController::class, 'estado']);

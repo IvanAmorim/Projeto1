@@ -2,6 +2,7 @@
 
 @section('content')
 
+
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
@@ -35,7 +36,7 @@
                                         <h5 class="card-title ">{{ $result->Nome }}</h5>
                                         <p class="card-text">{{ $result->Name }}</p>
                                         <p class="card-text fw-light">{{ $result->CodPostal }},{{ $result->Lugar }}({{ $result->Concelho }})</p>
-                                        <a href="#" class="btn btn-primary">Ver detalhes</a>
+                                        <a href="{{ route('Pages.servico',['id'=> $result->ID]) }}" class="btn btn-primary">Ver detalhes</a>
                                     </div>
                                     </div>
                             </tr>     

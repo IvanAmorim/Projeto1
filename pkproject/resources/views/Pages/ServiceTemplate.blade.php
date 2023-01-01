@@ -8,12 +8,13 @@
     <div class="title center ">
         <h1>Plataforma digital de mediação de serviços pessoais!!!</h1>
         <?php echo("<img src='/images/$id.jpg' class='image'>") ?>
+        
         <div class="search-container center">
-            <form action="/action_page.php">
-            <input type="text" placeholder="Procure um serviço " name="search" class="search">
-            <button type="submit" class="button">Procurar</button>
-            
-            </form>
+            <form action="/" method="GET">
+                <input type="text" placeholder="Procure um serviço " name="search" class="search">
+                <button type="submit" class="button">Procurar</button>
+                
+              </form>
         </div>
     </div>
 

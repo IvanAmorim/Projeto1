@@ -143,12 +143,8 @@
                 <div class="col-md-8">
                     <div class="card">
                         <div class="card-header">{{ __('Dashboard') }}</div>
-        <?php $id=Auth::user()->id?>
-                    @if ($id == 1)
-                            <a href={{ route("Admin.categoria") }} class="btn"> Inserir categoria </a>
-                            <a href={{ route("Admin.servico") }} class="btn"> Inserir serviço </a>
-                        
-                    @endif
+                        <a href={{ route("Admin.categoria") }} class="btn"> Inserir categoria </a>
+                        <a href={{ route("Admin.servico") }} class="btn"> Inserir serviço </a>
                     </div>
                 </div>
             </div>

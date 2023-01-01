@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\estadoproposta;
+use App\Models\estadopropostas;
+use App\Models\mensagens;
 use toastr;
 use App\Models\pedidos;
 use App\Models\perguntas;
+use App\Models\propostas;
 use App\Models\respostas;
 use App\Models\typeservices;
 use Illuminate\Http\Request;
@@ -109,11 +113,19 @@ class ServicosController extends Controller
         $user=Auth::user()->id;
         $result=servicexamples::orderBy('servicexamples.id')
                                             ->leftjoin('typeservices','servicexamples.ID_TypeService','=','typeservices.ID')
-                                            ->leftjoin('pedidoservicos','pedidoservicos.ID_servico','=','servicexamples.ID')                                            
-                                            ->select('servicexamples.Name AS NameService','typeservices.Name AS NameType','pedidoservicos.ID_user AS userID')
+                                            ->leftjoin('pedidoservicos','pedidoservicos.ID_servico','=','servicexamples.ID')                                          
+                                            ->select('servicexamples.Name AS NameService','typeservices.Name AS NameType','pedidoservicos.ID_user AS userID','pedidoservicos.ID_pedido AS IDPedido')
                                             ->where('pedidoservicos.ID_user',$user)
                                             ->paginate();  
-        return view('Pages.userpedidos',['results'=>$result]);
+        $i=0;
+        foreach($result as $r ){
+            $count[$i]=propostas::orderBy('id')->where('ID_pedido',$r->IDPedido)->count();
+            $i++;
+        }
+       if($i==0)
+        return redirect()->back()->with('error','Ainda não tem nenhum pedido');
+        
+        return view('Pages.userpedidos',['results'=>$result,'propostas'=>$count]);
     }
 
     public function categoria(){
@@ -122,7 +134,8 @@ class ServicosController extends Controller
     }
 
     public function servicos(){
-        $servicos=typeservices::orderBy('id')->paginate();
+        $count=typeservices::orderBy('id')->count();
+        $servicos=typeservices::orderBy('id')->paginate($count);
         return view('Admin.servico',['servicos'=>$servicos]);
     }
 
@@ -205,5 +218,139 @@ class ServicosController extends Controller
         }
 
     }
+
+
+    public function servico($id){
+
+        $pedidos=pedidoservicos::orderBy('pedidoservicos.id')
+                                                            ->leftjoin('servicexamples','pedidoservicos.ID_servico','=','servicexamples.ID')
+                                                            ->leftjoin('pedidos','pedidoservicos.ID_pedido','=','pedidos.ID')
+                                                            ->where('pedidos.id',$id)
+                                                            ->get();                                       
+                                                            
+        $perguntas=perguntaspedidos::orderBy('perguntaspedidos.id')
+                                                                ->leftjoin('respostas','perguntaspedidos.ID_resposta','=','respostas.ID')
+                                                                ->leftjoin('perguntas','perguntaspedidos.ID_pergunta','=','perguntas.ID')
+                                                                ->where('perguntaspedidos.ID_pedido',$id)
+                                                                ->select('perguntas.Pergunta','respostas.Resposta')
+                                                                ->paginate();
+
+        return view('Pages.servico',['pedidos'=>$pedidos,'perguntas'=>$perguntas]);
+    }
+
+    public function propostainsert(Request $request){
+        $id=Auth::user()->id;
+
+        $proposta = new propostas;
+        $proposta->ID_pedido=$request->id;
+        $proposta->ID_prestador=$id;
+        $proposta->Valor=$request->valor;
+        $proposta->Tipo=$request->tipo;
+        $proposta->Mensagem=$request->mensagem;
+        $proposta->save();    
+
+        $result=pedidoservicos::orderBy('pedidoservicos.id')
+        ->leftjoin('servicexamples','pedidoservicos.ID_servico','=','servicexamples.ID')
+        ->leftjoin('users','pedidoservicos.ID_user','=','users.id')
+        ->leftjoin('pedidos','pedidoservicos.ID_pedido','=','pedidos.ID')
+        ->paginate();
+
+
+        return view('Pages.prestadores',['results'=>$result])->with('success','A proposta foi adicionada com sucesso!');
+
+    }
+
+    public function verproposta($id){
+        if($id=="all"){
+            $id=Auth::user()->id;
+            $propostas=propostas::orderBy('ID')
+                                        ->leftjoin('pedidos','pedidos.ID','=','propostas.ID_pedido')
+                                        ->leftjoin('users','users.id','=','pedidos.ID_user')
+                                        ->select('propostas.*','users.name','users.email')
+                                        ->where('ID_prestador',$id)->paginate();
+        }else{
+               $propostas=propostas::orderBy('ID')
+                                        ->leftjoin('users','propostas.ID_prestador','=','users.id')
+                                        ->select('propostas.*','users.name','users.email')
+                                        ->where('ID_pedido',$id)
+                                        ->paginate();
+        }
+        
+        $i=0;
+        foreach($propostas as $proposta){
+            $cnt=estadopropostas::orderBy('ID')->where('ID_proposta',$proposta->ID)->count();
+            if( $cnt == 0  ) {
+                $estado[$i]="Em aprovação";
+            }else{
+                $estados=estadopropostas::orderBy('ID')->where('ID_proposta',$proposta->ID)->get();
+                $estado[$i]=$estados[0]->estado;
+            }
+            $i++;
+        }
+        
+
+
+        return view('Pages.verpropostas',['propostas'=>$propostas,'estado'=>$estado]);
+    }
+
+    public function conversas($id){
+        $proposta=propostas::orderBy('ID')
+                                        ->leftjoin('users','propostas.ID_prestador','=','users.id')
+                                        ->where('propostas.ID',$id)
+                                        ->select('propostas.*','users.name','users.email')
+                                        ->get();
+    
+
+        $pedidos=pedidoservicos::orderBy('pedidoservicos.id')
+                                                            ->leftjoin('servicexamples','pedidoservicos.ID_servico','=','servicexamples.ID')
+                                                            ->leftjoin('pedidos','pedidoservicos.ID_pedido','=','pedidos.ID')
+                                                            ->where('pedidos.id',$proposta[0]->ID_pedido)
+                                                            ->get();                                      
+                                                            
+        $perguntas=perguntaspedidos::orderBy('perguntaspedidos.id')
+                                                                ->leftjoin('respostas','perguntaspedidos.ID_resposta','=','respostas.ID')
+                                                                ->leftjoin('perguntas','perguntaspedidos.ID_pergunta','=','perguntas.ID')
+                                                                ->where('perguntaspedidos.ID_pedido',$proposta[0]->ID_pedido)
+                                                                ->select('perguntas.Pergunta','respostas.Resposta')
+                                                                ->paginate();
+
+        $mensagem=mensagens::orderBy('ID')->where('ID_proposta',$id)->paginate();
+
+        $estado=estadopropostas::orderBy('ID')->where('ID_proposta',$id)->count();
+        if( $estado == 0  ) {
+            $estado="Em aprovação";
+        }else{
+            $estados=estadopropostas::orderBy('ID')->where('ID_proposta',$id)->get();
+            $estado=$estados[0]->estado;
+        }
+
+        return view('Pages.conversas',['pedidos'=>$pedidos,'perguntas'=>$perguntas,'proposta'=>$proposta,'id'=>$id, 'mensagens'=>$mensagem,'estado'=>$estado ]);
+    }
+
+    public function conversassubmit($id, Request $request){
+        $i=Auth::user()->id;
+
+        $mensagem = new mensagens;
+        $mensagem->ID_user=$i;
+        $mensagem->ID_proposta=$id;
+        $mensagem->Mensagem=$request->mensagem;
+        $mensagem->save();
+
+        return redirect()->back();
+    }
+    public function estado($id, Request $request){
+       
+        $estado = new estadopropostas;
+        $estado->ID_proposta=$id;
+        $estado->estado=$request->aprovar;
+        $estado->save();
+
+        return redirect()->back();
+    }
+
+
+
+
+
 
 }

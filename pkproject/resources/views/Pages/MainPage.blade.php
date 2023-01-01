@@ -17,12 +17,7 @@
 
     <div class="title center">
         <h1>Plataforma digital de mediação de serviços pessoais!!!</h1>
-        @if (\Session::has('error'))
-          <div class="alert alert-danger">
-              {!! \Session::get('error') !!}
-              
-          </div>
-        @endif
+
 
         <div class="search-container center">
             <form action="/" method="GET">
