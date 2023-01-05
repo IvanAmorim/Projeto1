@@ -68,9 +68,9 @@
                                     <a class="dropdown-item" href="{{ route('Pages.userpedidos') }}">Os meus pedidos</a>
                                     @if (Auth::user()->tipo == 1)
                                         <a class="dropdown-item" href="{{ route('Pages.prestadores')}}">Pedidos</a>
-                                    @endif
-                                    @if (Auth::user()->tipo == 1)
                                         <a class="dropdown-item" href="{{ route('Pages.verpropostas',['id'=> "all"])}}">As minhas propostas</a>
+                                        <a class="dropdown-item" href="{{ route('Pages.planos')}}">Planos</a>
+
                                     @endif
 
                                     <a class="dropdown-item" href="{{ route('logout') }}"

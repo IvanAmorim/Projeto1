@@ -79,14 +79,29 @@
                 }
 
             ?>   
+            @if ($id==70)
+                <div class="card">
+                    <div class="container1">
+                        <h4>Nome do serviço: </h4>
+                        <input type="text" class='textbox form-control' name='nomeservico' placeholder=' Indique o nome do serviço que pretende' >    
+                    </div>    
+                </div>
+                <div class="card">
+                    <div class="container1">
+                        <h4>Descrição </h4>
+                        <textarea class='textarea form-control' name='informacoes' placeholder=' Dê-nos mais detalhes sobre o serviço que pretende.'></textarea>    
+                    </div>    
+                </div>
             
-            <div class="card">
-                <div class="container1">
-                    <h4>Tem mais informações que ainda não nos deu?</h4>
-                    <textarea class='textarea' name='informacoes' placeholder=' Outros detalhes que queira mencionar?'></textarea>    
-                </div>    
-            </div>            
+            @else
+                <div class="card">
+                    <div class="container1">
+                        <h4>Tem mais informações que ainda não nos deu?</h4>
+                        <textarea class='textarea' name='informacoes' placeholder=' Outros detalhes que queira mencionar?'></textarea>    
+                    </div>    
+                </div>            
             
+            @endif
             
             <div class="card">
                 <div class="container1">

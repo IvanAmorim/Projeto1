@@ -2,18 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\estadoproposta;
-use App\Models\estadopropostas;
-use App\Models\mensagens;
 use toastr;
+use App\Models\planos;
 use App\Models\pedidos;
+use App\Models\mensagens;
 use App\Models\perguntas;
 use App\Models\propostas;
 use App\Models\respostas;
 use App\Models\typeservices;
 use Illuminate\Http\Request;
+use App\Models\estadoproposta;
 use App\Models\pedidoservicos;
 use App\Models\servicexamples;
+use App\Models\estadopropostas;
 use App\Models\servicecategory;
 use App\Models\perguntaspedidos;
 use Illuminate\Support\Facades\Auth;
@@ -38,56 +39,78 @@ class ServicosController extends Controller
 
     public function DataInsert(Request $request){
         $res=$request->except('_token');
-       
-        $pedido = new pedidos;
-        $pedido->ID_user=Auth::user()->id;
-        $pedido->informacoes = $request->informacoes;
-        $pedido->Concelho = $request->Concelho;
-        $pedido->Lugar = $request->Lugar;
-        $pedido->CodPostal = $request->codPostal;
-        $pedido->Email = $request->email;
-        $pedido->Nome = $request->nomeApelido;
-        $pedido->Tel = $request->tel;
-        $pedido->save();
+        if($request->id == 70){
+            $pedido = new pedidos;
+            $pedido->ID_user=Auth::user()->id;
+            $pedido->Nomeservico= $request->nomeservico;
+            $pedido->informacoes = $request->informacoes;
+            $pedido->Concelho = $request->Concelho;
+            $pedido->Lugar = $request->Lugar;
+            $pedido->CodPostal = $request->codPostal;
+            $pedido->Email = $request->email;
+            $pedido->Nome = $request->nomeApelido;
+            $pedido->Tel = $request->tel;
+            $pedido->save();
 
-        
-        $ID=pedidos::orderBy('id','desc')->first()->ID;
-
-        $resp="resposta";
-
-        $perguntas=perguntas::orderBy('id','asc')->where('ID_serviceexamples',$request->id)->paginate();
-        $i=0;
-        foreach ($perguntas as $pergunta){
-            $r=$resp.$i;
-            if($pergunta->tipo_resposta==2){
-                $resposta= new perguntaspedidos;
-                $resposta->ID_pedido =$ID;
-                $resposta->ID_pergunta=$pergunta->ID;
-                $resposta->ID_resposta=$res[$r];
-                $resposta->save();
-            }else{
-                //guarda a resposta
-                $resposta= new respostas;
-                $resposta->ID_pergunta=$pergunta->ID;
-                $resposta->Resposta=$res[$r];
-                $resposta->save();
-                //guarda no pedido
-                $idResposta=respostas::orderBy('id','desc')->first()->ID;
-                $resposta= new perguntaspedidos;
-                $resposta->ID_pedido =$ID;
-                $resposta->ID_pergunta=$pergunta->ID;
-                $resposta->ID_resposta=$idResposta;
-                $resposta->save();
-            }
-            $i++;
+            $ID=pedidos::orderBy('id','desc')->first()->ID;
+            
+            $pedidoservico= new pedidoservicos;
+            $pedidoservico->ID_pedido=$ID;
+            $pedidoservico->ID_servico=70;
+            $pedidoservico->ID_user=Auth::user()->id;
+            $pedidoservico->save();
         }
-        
-        $pedidoservico= new pedidoservicos;
-        $pedidoservico->ID_pedido=$ID;
-        $pedidoservico->ID_servico=$pergunta->ID_serviceexamples;
-        $pedidoservico->ID_user=Auth::user()->id;
-        $pedidoservico->save();
+            else{       
+            $pedido = new pedidos;
+            $pedido->ID_user=Auth::user()->id;
+            $pedido->informacoes = $request->informacoes;
+            $pedido->Concelho = $request->Concelho;
+            $pedido->Lugar = $request->Lugar;
+            $pedido->CodPostal = $request->codPostal;
+            $pedido->Email = $request->email;
+            $pedido->Nome = $request->nomeApelido;
+            $pedido->Tel = $request->tel;
+            $pedido->save();
 
+            
+            $ID=pedidos::orderBy('id','desc')->first()->ID;
+
+            $resp="resposta";
+
+            $perguntas=perguntas::orderBy('id','asc')->where('ID_serviceexamples',$request->id)->paginate();
+            $i=0;
+            foreach ($perguntas as $pergunta){
+                $r=$resp.$i;
+                if($pergunta->tipo_resposta==2){
+                    $resposta= new perguntaspedidos;
+                    $resposta->ID_pedido =$ID;
+                    $resposta->ID_pergunta=$pergunta->ID;
+                    $resposta->ID_resposta=$res[$r];
+                    $resposta->save();
+                }else{
+                    //guarda a resposta
+                    $resposta= new respostas;
+                    $resposta->ID_pergunta=$pergunta->ID;
+                    $resposta->Resposta=$res[$r];
+                    $resposta->save();
+                    //guarda no pedido
+                    $idResposta=respostas::orderBy('id','desc')->first()->ID;
+                    $resposta= new perguntaspedidos;
+                    $resposta->ID_pedido =$ID;
+                    $resposta->ID_pergunta=$pergunta->ID;
+                    $resposta->ID_resposta=$idResposta;
+                    $resposta->save();
+                }
+                $i++;
+            }
+        
+            
+            $pedidoservico= new pedidoservicos;
+            $pedidoservico->ID_pedido=$ID;
+            $pedidoservico->ID_servico=$pergunta->ID_serviceexamples;
+            $pedidoservico->ID_user=Auth::user()->id;
+            $pedidoservico->save();
+        }
         
 
         // Display an error toast with no title
@@ -136,6 +159,7 @@ class ServicosController extends Controller
     public function servicos(){
         $count=typeservices::orderBy('id')->count();
         $servicos=typeservices::orderBy('id')->paginate($count);
+
         return view('Admin.servico',['servicos'=>$servicos]);
     }
 
@@ -234,9 +258,20 @@ class ServicosController extends Controller
                                                                 ->where('perguntaspedidos.ID_pedido',$id)
                                                                 ->select('perguntas.Pergunta','respostas.Resposta')
                                                                 ->paginate();
+                                                                
+        $id=Auth::user()->id;
+        $cnt=planos::orderBy('ID')->where('ID_user',$id)->count();
+        if($cnt!=0){
+           $planos=planos::orderBy('ID')->where('ID_user',$id)->get('plano');
+           $creditos=$planos[0]->plano;
+        }else{
+           $creditos=0;
+        }
 
-        return view('Pages.servico',['pedidos'=>$pedidos,'perguntas'=>$perguntas]);
+
+        return view('Pages.servico',['pedidos'=>$pedidos,'perguntas'=>$perguntas,'creditos'=>$creditos]);
     }
+
 
     public function propostainsert(Request $request){
         $id=Auth::user()->id;
@@ -255,7 +290,7 @@ class ServicosController extends Controller
         ->leftjoin('pedidos','pedidoservicos.ID_pedido','=','pedidos.ID')
         ->paginate();
 
-
+        
         return view('Pages.prestadores',['results'=>$result])->with('success','A proposta foi adicionada com sucesso!');
 
     }
@@ -277,6 +312,7 @@ class ServicosController extends Controller
         }
         
         $i=0;
+        $estado[0]="Em aprovação";
         foreach($propostas as $proposta){
             $cnt=estadopropostas::orderBy('ID')->where('ID_proposta',$proposta->ID)->count();
             if( $cnt == 0  ) {
@@ -350,6 +386,40 @@ class ServicosController extends Controller
 
 
 
+    public function planos(Request $request){
+        $id=Auth::user()->id;
+         $cnt=planos::orderBy('ID')->where('ID_user',$id)->count();
+         if($cnt!=0){
+            $planos=planos::orderBy('ID')->where('ID_user',$id)->get('plano');
+            $plano=$planos[0]->plano;
+         }else{
+            $plano=0;
+         }
+        
+        
+
+         return view('Pages.planos',['creditos'=>$plano]);
+    }
+
+    public function plano(Request $request){
+        $id=Auth::user()->id;
+        $plano= new planos;
+        $plano->ID_user=$id;
+        $plano->plano=$request->tipo;
+        $plano->save();
+        
+        $cnt=planos::orderBy('ID')->where('ID_user',$id)->count();
+         if($cnt!=0){
+            $planos=planos::orderBy('ID')->where('ID_user',$id)->get('plano');
+            $plano=$planos[0]->plano;
+         }else{
+            $plano=0;
+         }
+        
+
+         return view('Pages.planos',['creditos'=>$plano]);
+
+    }
 
 
 

@@ -7,16 +7,27 @@
                 <div class="card-group mt-5">
                     <div class="card">
                       <div class="card-body text-center">
-                        <h5 class="card-title text-center">{{ $pedidos[0]->Nome }}</h5>
-                        <p class="card-text fw-light">{{ $pedidos[0]->CodPostal }},{{ $pedidos[0]->Concelho }}<br>{{ $pedidos[0]->Tel }}</p>
-                        <p class="card-text">{{ $pedidos[0]->Name }}</p>
-                        <div class="text-start">
-                            @foreach ($perguntas as $pergunta)
-                                <p class="card-text"><small class="text-muted">{{ $pergunta->Pergunta }}</small><br>{{ $pergunta->Resposta }}</p>
+                        @if( $perguntas[0] == Null )
+                            <h5 class="card-title text-center">{{ $pedidos[0]->Nome }}</h5>
+                            <p class="card-text fw-light">{{ $pedidos[0]->CodPostal }},{{ $pedidos[0]->Concelho }}<br>{{ $pedidos[0]->Tel }}</p>
+                            <p class="card-text">{{ $pedidos[0]->Name }}</p>
+                            <div class="text-start">
+                            <p class="card-text"><small class="text-muted">Nome:</small><br>{{ $pedidos[0]->Nomeservico }}</p>
+                            <p class="card-text"><small class="text-muted">Descrição:</small><br>{{$pedidos[0]->informacoes }}<br></p>
+                            </div>
+                          
+                            
+                        @else
+                            <h5 class="card-title text-center">{{ $pedidos[0]->Nome }}</h5>
+                            <p class="card-text fw-light">{{ $pedidos[0]->CodPostal }},{{ $pedidos[0]->Concelho }}<br>{{ $pedidos[0]->Tel }}</p>
+                            <p class="card-text">{{ $pedidos[0]->Name }}</p>
+                            <div class="text-start">
+                                @foreach ($perguntas as $pergunta)
+                                    <p class="card-text"><small class="text-muted">{{ $pergunta->Pergunta }}</small><br>{{ $pergunta->Resposta }}</p>
 
-                            @endforeach
-                        </div>
-
+                                @endforeach
+                            </div>
+                        @endif
                         @if(Auth::user()->tipo!=1 && $estado=="Em aprovação")
                             <form action="/Pages/conversas/{{ $id }}/estado" method="post" enctype="multipart/form-data">
                                 @csrf

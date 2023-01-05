@@ -56,3 +56,6 @@ Route::get('Pages/conversas/{id}',[ServicosController::class, 'conversas'])->nam
 Route::post('Pages/conversas/{id}',[ServicosController::class, 'conversassubmit']);
 
 Route::post('Pages/conversas/{id}/estado',[ServicosController::class, 'estado']);
+
+Route::get('Pages/planos',[ServicosController::class, 'planos'])->name('Pages.planos');
+Route::post('Pages/plano',[ServicosController::class, 'plano']);
